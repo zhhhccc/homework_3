@@ -13,3 +13,6 @@ b.visualize_ea()
 
 print(analyze_route_stops(df).head(10))
 visualize(analyze_route_stops(df))
+
+
+b.Peak_Hour_Factor()

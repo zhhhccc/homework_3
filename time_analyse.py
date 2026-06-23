@@ -94,3 +94,51 @@ class time_analysis:
         plt.savefig('hour_distribution.png', dpi=150, bbox_inches='tight')
         print(f"\n图表已保存为: hour_distribution.png")
         plt.close()
+
+    def Peak_Hour_Factor(self):
+        peak_hour = np.argmax(self.hourly_counts)
+        peak_hour_volume = self.hourly_counts[peak_hour]
+
+        print(f"高峰小时：{peak_hour:02d}:00 ~ {peak_hour + 1:02d}:00，刷卡量：{peak_hour_volume} 次")
+
+        peak_df = self.df1[
+            (self.df1['交易时间'].dt.hour == peak_hour)
+        ].copy()
+
+        peak_df = peak_df.set_index('交易时间')
+
+        count_5min = peak_df.resample('5min').size()
+
+        max5 = count_5min.max()
+        max5_time = count_5min.idxmax()
+
+        PHF5 = peak_hour_volume / (12 * max5)
+
+        print(
+            f"最大5分钟刷卡量（{max5_time:%H:%M}~"
+            f"{(max5_time + pd.Timedelta(minutes=5)):%H:%M}）："
+            f"{max5} 次",
+            end=' '
+        )
+
+        print(
+            f"PHF5 = {peak_hour_volume} / (12 × {max5}) = {PHF5:.4f}"
+        )
+
+        count_15min = peak_df.resample('15min').size()
+
+        max15 = count_15min.max()
+        max15_time = count_15min.idxmax()
+
+        PHF15 = peak_hour_volume / (4 * max15)
+
+        print(
+            f"最大15分钟刷卡量（{max15_time:%H:%M}~"
+            f"{(max15_time + pd.Timedelta(minutes=15)):%H:%M}）："
+            f"{max15} 次",
+            end=' '
+        )
+
+        print(
+            f"PHF15 = {peak_hour_volume} / (4 × {max15}) = {PHF15:.4f}"
+        )
