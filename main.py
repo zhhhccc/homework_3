@@ -2,6 +2,7 @@ from pre_process import data
 from time_analyse import time_analysis
 from route_analyse import analyze_route_stops,visualize
 from driver_derive import driver_deriving
+from ranking_statistic import ranking_statistics
 
 a=data()
 a.test()
@@ -22,3 +23,6 @@ b.Peak_Hour_Factor()
 
 
 driver_deriving()
+
+
+ranking_statistics()
