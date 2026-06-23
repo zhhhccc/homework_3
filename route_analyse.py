@@ -28,9 +28,11 @@ def visualize(df):
         data=top15,
         y='线路号',
         x='mean_stops',
+        hue='线路号',
         palette=palette,
         errorbar=None,  # 禁用自带误差棒，手动绘制
-        orient='h'
+        orient='h',
+        legend=False
     )
 
     for patch, (_, row) in zip(ax.patches, top15.iterrows()):
