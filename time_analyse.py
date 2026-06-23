@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pre_process import data
 a=data()
-df = a.delete()
+df = a.delete()[3]
 
 class time_analysis:
     def __init__(self):

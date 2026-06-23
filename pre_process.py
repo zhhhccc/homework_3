@@ -33,35 +33,23 @@ class data:
         self.shift()
         # 统计 ride_stops 列中 0 的个数（记录）
         zero_count = (self.da['ride_stops'] == 0).sum()
-        '''print(f"构造ride_stops后删除异常记录(ride_stops==θ/无法计算)行数：{zero_count}")
-        print()'''
         # 删除为 0 的行
         df = self.da[self.da['ride_stops'] != 0]
-        '''# 打印各列缺失值数量
-        print('各列缺失值数量：')
-        num=df.isnull().sum().sum()
-        if num==0:
-            print('无缺失值')
-        else:
-            print(df.isnull().sum())'''
         # 删除有缺失值的行
+        df1 = df.isnull().sum()
+        num = df1.sum()
         df_cleaned = df.dropna()
 
-        return df_cleaned
+        return zero_count,df1,num,df_cleaned
 
-    def delete1(self):
-        self.shift()
-        # 统计 ride_stops 列中 0 的个数（记录）
-        zero_count = (self.da['ride_stops'] == 0).sum()
+    def print_delete(self):
+        zero_count,df1,num,_=self.delete()
         print(f"构造ride_stops后删除异常记录(ride_stops==θ/无法计算)行数：{zero_count}")
         print()
-        # 删除为 0 的行
-        df = self.da[self.da['ride_stops'] != 0]
         # 打印各列缺失值数量
         print('各列缺失值数量：')
-        num=df.isnull().sum().sum()
         if num==0:
             print('无缺失值')
         else:
-            print(df.isnull().sum())
+            print(df1)
 
