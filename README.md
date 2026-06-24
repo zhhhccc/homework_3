@@ -2,7 +2,6 @@
 
 仓库链接: https://github.com/zhhhccc/homework_3
 
-### 不小心把代码分成了四个文件，想更正时为时已晚，求老师与助教原谅，少扣一点点分，|>_<|，在main文件中可以运行全部代码，谢谢老师，谢谢助教老师
 
 ## 1. 任务拆解与 AI 协作策略
 
@@ -18,7 +17,6 @@
   - 时间解析（hour 字段）
   - ride_stops 构造
   - 缺失值处理
-- 为了方便以后使用，我把这些个函数手动封装为类，避免import多个函数（不过使用完后感觉便捷性提升并不大）
 
 
 ### （2）任务二
@@ -32,7 +30,6 @@
 
 ### （4）任务四
 - 告诉AI我有转化为datetime的列，并把文件传给AI，让它帮我完成粒度计算
-- 我发现任务四与任务二都趋近于时间的处理，有可以共同利用的数据，于是我自己添加__init__，将它们手动封装到了一个类里
 
 ### （5）任务五与任务六
 - 告诉AI我有df以及各个列的名称，让AI分别完成任务就行
@@ -88,24 +85,24 @@ ax = sns.barplot(
 
 ## 4. 人工代码审查
 ```python
-def Peak_Hour_Factor(self):  
+def Peak_Hour_Factor(hourly_counts,df):  
     # 定义一个方法：计算高峰小时系数（Peak Hour Factor, PHF）
 
-    peak_hour = np.argmax(self.hourly_counts)  
+    peak_hour = np.argmax(hourly_counts)  
     # 在 hourly_counts（每小时客流量数组）中找到最大值的索引
     # 这个索引对应“客流最高的小时”
 
-    peak_hour_volume = self.hourly_counts[peak_hour]  
+    peak_hour_volume = hourly_counts[peak_hour]  
     # 取出该高峰小时对应的总刷卡量（客流量）
 
     print(f"高峰小时：{peak_hour:02d}:00 ~ {peak_hour + 1:02d}:00，刷卡量：{peak_hour_volume} 次")  
     # 输出高峰小时信息
     # :02d 表示两位数格式（如 08:00）
 
-    peak_df = self.df1[
-        (self.df1['交易时间'].dt.hour == peak_hour)
+    peak_df = df[
+        (df['交易时间'].dt.hour == peak_hour)
     ].copy()  
-    # 从原始数据 df1 中筛选出“高峰小时内”的所有记录
+    # 从原始数据 df 中筛选出“高峰小时内”的所有记录
     # .dt.hour 提取时间中的“小时”
     # .copy() 防止后续修改触发 SettingWithCopyWarning
 
